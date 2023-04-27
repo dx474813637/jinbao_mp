@@ -4,6 +4,7 @@
 			<u-cell-group>
 				<u-cell-item 
 					v-for="(item, index) in list" 
+					:key="index"
 					:icon="item.icon" 
 					:title="item.name" 
 					:icon-style="iconStyle"

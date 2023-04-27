@@ -405,6 +405,16 @@
             }
             
         }
+        ,{
+            "path" : "pages/shopList/shopList",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "供应商列表",
+                "enablePullDownRefresh": false,
+				"onReachBottomDistance": 50
+            }
+            
+        }
     ], 
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

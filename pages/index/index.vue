@@ -25,64 +25,21 @@
 		<view class="u-p-l-20 u-p-r-20 u-p-b-30">
 			<view class="swiper-w u-p-t-20" v-if="homelist.swiper.length > 0">
 				<u-swiper :list="homelist.swiper" name="img" @change="e => current = e.current" @click="swiperClick" bgColor="transparent">
-					<!-- <view slot="indicator" class="indicator">
-						<view class="indicator__dot" v-for="(item, index) in homelist.swiper" :key="index"
-							:class="[index === current && 'indicator__dot--active']">
-						</view>
-					</view> -->
 				</u-swiper>
-			</view>
-			<view class="nav-rows u-p-t-20" v-if="homelist.memu.length > 0">
-				<view class="u-flex u-flex-items-center u-flex-between u-p-30 bg-white u-radius-5">
-					<view class="item u-flex u-flex-column u-flex-items-center" v-for="(item,index) in homelist.memu" :key="index"
-						@click="navTo(item)">
-						<view class="u-m-b-10">
-							<u-image :src="item.img" width="50px" height="50px"></u-image>
-						</view>
-						<view class="u-line-1" v-if="item.name">
-							{{item.name}}
-						</view>
-					</view>
-				</view>
-			</view>
-			<view class="nav-rows u-p-t-20" v-if="homelist.ad2.length > 0">
-				<view class="img-rows2 u-flex u-flex-items-start u-flex-wrap ">
-					<view class="item "
-						v-for="(item, index) in homelist.ad2"
-						:key="index"
-						@click="navTo(item)"
-						>
-						<u-image :src="item.img" width="100%" mode="widthFix"
-							bgColor="transparent"></u-image>
-					</view> 
-				</view>
-			</view>
-			<view class="nav-rows u-p-t-20" v-if="homelist.ad1.length > 0">
-				<view class="img-rows1 u-flex u-flex-items-start u-flex-wrap ">
-					<view class="item"
-						v-for="(item, index) in homelist.ad1"
-						:key="index"
-						@click="navTo(item)"
-						>
-						<u-image :src="item.img" width="100%" mode="widthFix"
-							bgColor="transparent"></u-image>
-					</view> 
-				</view>
-			</view>
-		</view>
-		<!-- <u-sticky offsetTop="116">
-			<view class="tabs-w bg-white">
-				<u-tabs 
-					:list="list1" 
-					:current="current"
-					@change="tabsclick"
-				></u-tabs>
-			</view>
-		</u-sticky> -->
+			</view> 
+		</view> 
 		<view class="product-list-w u-p-20">
-			<view class="u-flex u-flex-wrap product-list">
-				<view class="item" v-for="item in list_product" :key="item.id" @click="handlePathDetail(item)">
-					<CardProductCol :list="item"></CardProductCol>
+			<view class="box-title u-flex u-flex-between u-flex-items-center u-m-b-20 u-p-l-20 u-p-r-20">
+				<view class="item text-bold text-black">
+					推荐供应商
+				</view>
+				<view class="item text-light u-font-28" @click="$u.route('/pages/shopList/shopList')">
+					更多
+				</view>
+			</view>
+			<view class="product-list">
+				<view class="item u-m-b-20 uni-shadow-base" v-for="item in 10" :key="item" >
+					<CardShopCell :list="item" @gotoIndex="gotoIndex"></CardShopCell>
 				</view>
 			</view>
 		</view>
@@ -221,6 +178,11 @@
 					url: data.url,
 				})
 			},
+			gotoIndex({data}) {
+				uni.reLaunch({
+					url: `pages/prodList/prodList2`,
+				})
+			},
 			swiperClick(index) {
 				if(!this.homelist.swiper[index]?.url) return
 				this.navTo(this.homelist.swiper[index]) 
@@ -244,13 +206,7 @@
 		flex: 0 0 100%; 
 	}
 	.product-list {
-		.item {
-			flex: 0 0 49%;
-			overflow: hidden;
-			margin-left: 2%;
-			&:nth-of-type(2n+1) {
-				margin-left: 0
-			}
+		.item { 
 		}
 	}
 	.indicator {
