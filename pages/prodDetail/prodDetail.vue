@@ -9,7 +9,7 @@
 		</u-popup>
 		<view class="tabbar-w safe-area-inset-bottom" v-if="sh == 0">
 			<view class="tabbar">
-				<navigator url="/pages/index/index" class="tabbar-item tab-icon-btn">
+				<navigator open-type="reLaunch" :url="`/pages/prodList/prodList2?id=${shopId}`" class="tabbar-item tab-icon-btn" v-if="shopId">
 					<div class="item-icon"><u-icon name="dianpu" custom-prefix="custom-icon"></u-icon></div>
 					<div class="item-icon">旺铺</div>
 				</navigator>
@@ -188,7 +188,8 @@
 				},
 				sh: 1,
 				homeInfo: uni.getStorageSync('home') || '',
-				logo: ''
+				logo: '',
+				shopId: ''
 			}
 		},
 		components: {
@@ -314,6 +315,7 @@
 				this.sellerInfo = res.data.sell_cards
 				this.sh = res.data.sh
 				this.logo = res.data.logo
+				this.shopId = res.data.shop_id
 			},
 			showWX() {
 				this.wxShow = true

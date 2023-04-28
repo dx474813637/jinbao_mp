@@ -72,7 +72,7 @@ let isRefreshing = false //正在刷新token
 
 
 http.setConfig((config) => { /* 设置全局配置 */
-	config.baseURL = 'https://wx3.y.netsun.com/Xcxrz/' /* 根域名不同 */
+	config.baseURL = 'https://wx3.y.netsun.com/Rongzi/' /* 根域名不同 */
 	config.header = {
 		...config.header,
 		'content-type': 'application/x-www-form-urlencoded',

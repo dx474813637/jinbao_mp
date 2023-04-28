@@ -5,7 +5,8 @@
 				<view class="search-w u-p-5 u-p-r-8" :style="{
 					border: `1rpx solid #bbb`
 				}">
-					<u-search placeholder="请输入想要搜索的商品1" 
+					<u-search 
+						:placeholder="search_name" 
 						v-model="keyword" 
 						bgColor="transparent" 
 						shape="round" 
@@ -31,14 +32,14 @@
 		<view class="product-list-w u-p-20">
 			<view class="box-title u-flex u-flex-between u-flex-items-center u-m-b-20 u-p-l-20 u-p-r-20">
 				<view class="item text-bold text-black">
-					推荐供应商
+					{{shop_name}}
 				</view>
 				<view class="item text-light u-font-28" @click="$u.route('/pages/shopList/shopList')">
 					更多
 				</view>
 			</view>
 			<view class="product-list">
-				<view class="item u-m-b-20 uni-shadow-base" v-for="item in 10" :key="item" >
+				<view class="item u-m-b-20 uni-shadow-base" v-for="item in list" :key="item.id" >
 					<CardShopCell :list="item" @gotoIndex="gotoIndex"></CardShopCell>
 				</view>
 			</view>
@@ -84,7 +85,9 @@
 				}, {
 					name: '手工'
 				}], 
-				list_product: []
+				list: [],
+				shop_name: '',
+				search_name: ''
 			};
 		},
 		onShareTimeline() {
@@ -105,8 +108,7 @@
 			console.log(options)
 			options.memu_id ? this.memu_id = options.memu_id : 1;
 			options.login ? uni.setStorageSync('sharelogin', options.login) : {};
-			this.homeUrl();
-			this.getProductData()
+			this.homeUrl(); 
 		},
 		onshow(options) {
 
@@ -114,12 +116,12 @@
 		methods: {
 			homeUrl() {
 				this.$http
-					.get('home', {
-
-					})
+					.get('home')
 					.then(res => {
 						if (res.data.code == 1) {
-
+							this.list = res.data.shop_list
+							this.shop_name = res.data.shop_name
+							this.search_name = res.data.search_name
 							this.homelist = {...this.homelist, ...res.data.list};
 							uni.setStorageSync('home', {
 								title: res.data.list.title,
@@ -149,25 +151,9 @@
 			},
 			search() {
 				uni.redirectTo({
-					url: `/pages/prodList/prodList?term=${this.keyword}`
+					url: `/pages/shopList/shopList?keywords=${this.keyword}`
 				})
-			},
-			async getProductData(search) {
-				this.loadStatus = 'loading'
-				let list = await this.$http.get('/product_list', {
-					params: {
-						p: 1
-					}
-				}) 
-				if(list.data.code == 1) {
-					this.list_product = [...this.list_product, ...list.data.list.list_products]
-					// if (this.p == list.data.list.pw_page_total) {
-					// 	this.loadStatus = 'nomore'
-					// 	this.endFlag = 'true'
-					// } else this.loadStatus = 'loadmore'
-					
-				} 
-			},
+			}, 
 			handlePathDetail(obj) {
 				uni.navigateTo({
 					url: `/pages/prodDetail/prodDetail?id=${obj.id}`,
@@ -180,7 +166,7 @@
 			},
 			gotoIndex({data}) {
 				uni.reLaunch({
-					url: `pages/prodList/prodList2`,
+					url: `/pages/prodList/prodList2?id=${data.id}`,
 				})
 			},
 			swiperClick(index) {
