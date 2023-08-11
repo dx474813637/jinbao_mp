@@ -127,6 +127,7 @@
 					> 
 					<u-input 
 						border
+						type="number"
 						v-model="model.amount"
 						placeholder="申请金额（元）"
 						></u-input> 
@@ -140,6 +141,7 @@
 				>
 					<u-input 
 						border
+						type="number"
 						v-model="model.termMonth"
 						placeholder="与核心企业合作月数"
 						></u-input>

@@ -28,6 +28,7 @@
 								v-model="keyword" 
 								bgColor="#f8f8f8"
 								@search="handleSearch"
+								@custom="handleSearch"
 							></u-search>
 						</view>
 					</view>

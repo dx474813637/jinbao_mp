@@ -114,7 +114,7 @@
 								plain  
 								:customStyle="btnStyle"
 								@click="updateyiqianbao(item.contract_id)" 
-							>更新签状态</u-button>
+							>更新签约状态</u-button>
 						</view>
 						<!-- <view class="item u-p-r-20" >
 							<u-button

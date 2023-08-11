@@ -2,11 +2,11 @@
 	<view class="wrap">
 		<view class="top"></view>
 		<view class="content">
-			<view class="title">欢迎登录生意宝</view>
+			<view class="title">欢迎登录{{name}}</view>
 			<u-form :model="form" ref="uForm" :error-type="['border-bottom', 'toast']">
 				<u-form-item prop="login" :left-icon-style="{'color': '#999'}"
 					:left-icon="logintype == 1 ?'phone-fill' : 'account-fill' ">
-					<u-input v-model="form.login" :placeholder="`请输入${logintype == 1? '手机' :'生意宝账号'}`" />
+					<u-input v-model="form.login" :placeholder="`请输入${logintype == 1? '手机' : name+'账号'}`" />
 				</u-form-item>
 
 				<template v-if="logintype == 2">
@@ -44,6 +44,7 @@
 					login: '',
 					passwd: '',
 				},
+				name: '',
 				rules1: {
 					login: [{
 							required: true,
@@ -60,18 +61,6 @@
 						},
 					],
 				},
-				rules2: {
-					login: [{
-						required: true,
-						message: '请输入生意宝账号',
-						trigger: ['blur', 'change']
-					}, ],
-					passwd: [{
-						required: true,
-						message: '请输入密码',
-						trigger: ['blur', 'change']
-					}, ],
-				},
 			}
 		},
 		onReady() {
@@ -84,9 +73,33 @@
 					'backgroundColor': this.$store.state.theme.themeColor,
 					'marginTop': '40rpx'
 				}
-			}
+			}, 
+			rules2() {
+				let obj = {
+					login: [{
+						required: true,
+						message: `请输入${this.name}账号`,
+						trigger: ['blur', 'change']
+					}, ],
+					passwd: [{
+						required: true,
+						message: '请输入密码',
+						trigger: ['blur', 'change']
+					}, ],
+				}
+				
+				this.$nextTick(() => {
+					this.handleSetRules()
+				})
+				
+				return obj
+			},
 		},
-		onLoad(){
+		async onLoad(){
+			const res = await this.$http.get('denglu_info') 
+			if(res.data.code == 1) {
+				this.name = res.data.list 
+			}
 			// this.$http.get('/sign_out')
 			// this.$http.get('/check_login')
 		},

@@ -247,7 +247,7 @@
 															:customStyle="btnStyle"
 															@click="updateyiqianbao(item.contract_id)" 
 															shape="circle"
-														>更新签状态</u-button>
+														>更新签约状态</u-button>
 													</view> 
 												</template>
 												
